@@ -34,7 +34,7 @@ h1.logo{font-family:"Limelight",Georgia,"Times New Roman",serif;font-weight:400;
 .mos{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);padding:1px;filter:blur(1.6px) saturate(.8)}
 .mos i{display:block;background-size:300% 400%;background-repeat:no-repeat}
 .th.lk{display:flex;align-items:center;justify-content:center;background:var(--line);color:var(--mut);font-weight:700;font-size:22px}
-.row b{font-size:16px}.row small{display:block;color:var(--mut);margin-top:4px;font-size:13px}
+.row b{font-size:16px}.row small{display:block;color:var(--mut);margin-top:4px;font-size:13px}.row .watched-mark{color:var(--g);font-weight:750}
 .play{flex:1;display:flex;flex-direction:column;gap:10px;min-height:0}
 .seg{display:flex;gap:8px}
 .seg button{flex:1;border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:12px;padding:8px 4px;font-size:13px;font-weight:600;font-family:inherit}
@@ -43,11 +43,11 @@ h1.logo{font-family:"Limelight",Georgia,"Times New Roman",serif;font-weight:400;
 .stage{flex:1;display:flex;align-items:center;justify-content:center;min-height:0}
 .poster{position:relative;aspect-ratio:2/3;width:min(100%,calc((100vh - 260px)*2/3));width:min(100%,calc((100dvh - 260px)*2/3))}
 #board{display:grid;touch-action:manipulation}
-.t{background-repeat:no-repeat;border-radius:5px!important;border:2px solid transparent;overflow:hidden;transform:none}
-.t.sel{border-color:var(--acc);transform:none}
-.t.ok{border-color:#218838;box-shadow:inset 0 0 0 1px rgba(255,255,255,.75),0 0 0 1px rgba(33,136,56,.45)}
-:root[data-theme="light"] .t.ok{border-color:#16812f;box-shadow:inset 0 0 0 1px #fff,0 0 0 1px rgba(22,129,47,.55)}
-#board.done .t{border:0;border-radius:0!important;box-shadow:none}
+.t{background-repeat:no-repeat;border:0!important;border-radius:0!important;overflow:hidden;transform:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.10)}
+.t.sel{outline:2px solid var(--acc);outline-offset:-2px;position:relative;z-index:2;transform:none}
+.t.ok{box-shadow:inset 0 0 0 2px #218838}
+:root[data-theme="light"] .t.ok{box-shadow:inset 0 0 0 2px #16812f}
+#board.done .t{border:0!important;border-radius:0!important;box-shadow:none;outline:0}
 .flip{perspective:900px;cursor:pointer}
 .fi{position:absolute;inset:0;transition:transform .8s;transform-style:preserve-3d}
 .flip.f .fi{transform:rotateY(180deg)}
@@ -457,7 +457,7 @@ function catView(k){
   const l=inCat(k);setTop(CATS[k][0],false,true,l.filter(done).length+'/'+l.length);
   $('gal').innerHTML=l.map(i=>{
     const d=done(i),o=open_(i);
-    return `<div class="row ${d?'':o?'p':'l'}" ${o?`onclick="openF(${i})"`:''}>${th(i,d,o)}<div><b>${d?F[i].t:o?'Next up':'Locked'}</b>${d?`<small>${F[i].y} · ${F[i].rt} min · ${F[i].d}</small>`:''}${!d?`<small>${o?'Tap to play':'Solve the previous film to unlock'}</small>`:''}</div></div>`}).join('');
+    return `<div class="row ${d?'':o?'p':'l'}" ${o?`onclick="openF(${i})"`:''}>${th(i,d,o)}<div><b>${d?F[i].t:o?'Next up':'Locked'}</b>${d?`<small>${F[i].y} · ${F[i].rt} min · ${F[i].d}</small>${watched[i]?'<small class="watched-mark">✓ Watched</small>':''}`:''}${!d?`<small>${o?'Tap to play':'Solve the previous film to unlock'}</small>`:''}</div></div>`}).join('');
 }
 function openF(i){
   cur=i;view='play';$('gal').hidden=true;$('play').hidden=false;
@@ -472,10 +472,10 @@ function startPuzzle(){
   setTop('Puzzle',false,true,inCat(F[cur].k).filter(done).length+'/'+inCat(F[cur].k).length);
   info();renderBoard();
 }
-function info(){$('info').textContent='Moves: '+moves+' · tap two pieces to swap'}
+function info(){$('info').textContent=solved?'':'Tap two pieces to swap'}
 function renderBoard(){
   const b=$('board');b.className=solved?'done':'';b.innerHTML='';
-  b.style.cssText=`position:absolute;inset:0;grid-template-columns:repeat(${cols},1fr);gap:${solved?0:2}px`;
+  b.style.cssText=`position:absolute;inset:0;grid-template-columns:repeat(${cols},minmax(0,1fr));grid-template-rows:repeat(${rows},minmax(0,1fr));gap:0;padding:0;`;
   order.forEach((p,pos)=>{
     const d=document.createElement('div');
     d.className='t'+(p===pos?' ok':'')+(pos===sel?' sel':'');
@@ -493,7 +493,7 @@ function tap(pos){
   if(order.every((p,i)=>p===i)){
     solved=true;renderBoard();
     if(!done(cur)||moves<saved[cur])saved[cur]=moves;save();
-    $('info').textContent='Solved in '+moves+' moves!';
+    $('info').textContent='Puzzle solved!';
     setTimeout(showCard,1100);
   }
 }
@@ -517,8 +517,8 @@ function luckyGo(){
 function luckyCont(){lucky=false;next()}
 function luckyWatch(){lucky=false;wmsg('Enjoy the movie!','Come back when you’re done.',2600,home)}
 function next(){const l=inCat(F[cur].k),p=l.indexOf(cur);p<l.length-1?openF(l[p+1]):catView(F[cur].k)}
-let SET={lv:0,theme:'light'};try{Object.assign(SET,JSON.parse(localStorage.getItem('fb_set')||'{}'))}catch(e){}
-lv=SET.lv;document.documentElement.setAttribute('data-theme',SET.theme||'light');
+let SET={lv:0,theme:'dark'};try{Object.assign(SET,JSON.parse(localStorage.getItem('fb_set')||'{}'))}catch(e){}
+lv=SET.lv;SET.theme=SET.theme||'dark';document.documentElement.setAttribute('data-theme',SET.theme);
 const saveSet=()=>{try{localStorage.setItem('fb_set',JSON.stringify(SET))}catch(e){}};
 function drawSet(){
   $('dseg').innerHTML=DIFF.map((d,k)=>`<button class="${k===lv?'on':''}" onclick="setLv(${k})">${d[0]}</button>`).join('');
