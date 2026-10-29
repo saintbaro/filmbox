@@ -533,7 +533,7 @@ function luckyGo(){
 function luckyCont(){lucky=false;next()}
 function luckyWatch(){lucky=false;wmsg('Enjoy the movie!','Come back when you’re done.',2600,home)}
 function next(){const l=inCat(F[cur].k),p=l.indexOf(cur);p<l.length-1?openF(l[p+1]):catView(F[cur].k)}
-let SET={lv:0,theme:'dark'};try{Object.assign(SET,JSON.parse(localStorage.getItem('fb_set')||'{}'))}catch(e){}
+let SET={lv:1,theme:'dark'};try{Object.assign(SET,JSON.parse(localStorage.getItem('fb_set')||'{}'))}catch(e){}
 lv=SET.lv;SET.theme=SET.theme||'dark';document.documentElement.setAttribute('data-theme',SET.theme);
 const saveSet=()=>{try{localStorage.setItem('fb_set',JSON.stringify(SET))}catch(e){}};
 function drawSet(){
