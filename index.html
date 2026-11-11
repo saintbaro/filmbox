@@ -17,11 +17,11 @@ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:en
 html,body{height:100%;margin:0}
 body{background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;display:flex;justify-content:center}
 .app{width:100%;max-width:480px;height:100%;display:flex;flex-direction:column;padding:12px 14px;gap:10px}
-.top{display:flex;align-items:center;gap:10px}
+.top{display:flex;align-items:center;gap:10px}.top>button:not([hidden]){height:36px;min-height:36px;display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;line-height:1.2}
 h1{font-size:19px;margin:0;flex:1}
 h1.logo{font-family:"Limelight",Georgia,"Times New Roman",serif;font-weight:400;font-size:30px;letter-spacing:4px}
 .pill,.ib{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-weight:700;font-size:14px;color:var(--ink);font-family:inherit}
-.tag{color:var(--mut);font-size:14px;margin:0 0 4px}
+.watchlist-nav{white-space:nowrap;cursor:pointer;padding:0 18px;font-size:16px}.watchlist-nav span{display:inline-flex;align-items:center;justify-content:center;min-width:19px;height:19px;margin-left:4px;padding:0 5px;border-radius:99px;background:var(--acc);color:#fff;font-size:11px}.watchlist-empty{color:var(--mut);text-align:center;padding:36px 16px;font-size:14px}.watchlist-item{cursor:pointer}.watchlist-item:active{transform:scale(.99)}.watchlist-toggle{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:auto;padding:12px 0 0;flex:none;background:transparent;border:0;border-top:1px solid var(--line);border-radius:0;color:var(--ink);font:650 13px inherit;cursor:pointer;text-align:center}.watchlist-toggle svg{width:17px;height:17px;flex:none}.watchlist-toggle.is-added{color:var(--g)}.tag{color:var(--mut);font-size:14px;margin:0 0 4px}
 .gal{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;display:flex;flex-direction:column;gap:10px;padding:0 max(14px,calc((100vw - 452px)/2)) 12px;position:relative;left:50%;transform:translateX(-50%);width:100vw;scrollbar-gutter:stable;scrollbar-width:thin;scrollbar-color:var(--mut) transparent}
 .cc{background:var(--card);border:1px solid var(--line);border-left:6px solid var(--c);border-radius:14px;padding:16px}
 .cc .r{display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:20px}
@@ -40,7 +40,8 @@ h1.logo{font-family:"Limelight",Georgia,"Times New Roman",serif;font-weight:400;
 .seg button{flex:1;border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:12px;padding:8px 4px;font-size:13px;font-weight:600;font-family:inherit}
 .seg button.on{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 16%,transparent)}
 .info{text-align:center;color:var(--mut);font-size:14px}
-.stage{flex:1;display:flex;align-items:center;justify-content:center;min-height:0}
+.stage{flex:1;display:flex;align-items:center;justify-content:flex-start;min-height:0;width:100%;padding-top:2px;box-sizing:border-box;}
+#pz,#flip{flex:0 0 auto;margin-inline:auto;transform-origin:center center;}
 .poster{position:relative;aspect-ratio:2/3;width:min(100%,calc((100vh - 260px)*2/3));width:min(100%,calc((100dvh - 260px)*2/3))}
 #board{display:grid;touch-action:manipulation}
 .t{background-repeat:no-repeat;border:0!important;border-radius:0!important;overflow:hidden;transform:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.10)}
@@ -52,7 +53,7 @@ h1.logo{font-family:"Limelight",Georgia,"Times New Roman",serif;font-weight:400;
 .fi{position:absolute;inset:0;transition:transform .8s;transform-style:preserve-3d}
 .flip.f .fi{transform:rotateY(180deg)}
 .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:12px;overflow:hidden}
-.front{background-size:cover}
+.front{background-size:100% 100%;background-position:center center;background-repeat:no-repeat}
 .back{transform:rotateY(180deg);background:var(--card);border:1px solid var(--line);padding:14px;overflow:auto;display:flex;flex-direction:column}
 .back h2{margin:0 0 2px;font-size:20px}
 .back h3{margin:10px 0 2px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--acc)}
@@ -84,7 +85,8 @@ input[type=range]{width:100%;margin-top:12px;accent-color:var(--acc)}
   .gal{flex:1 0 auto;min-height:0;overflow:visible;padding:0 0 16px;left:auto;transform:none;width:100%;scrollbar-gutter:auto;}
   .play{flex:0 0 auto;min-height:0;gap:12px;padding-bottom:max(12px,env(safe-area-inset-bottom,0px));}
   .info{font-size:15px;min-height:20px;}
-  .stage{flex:0 0 auto;min-height:0;width:100%;}
+  .stage{flex:0 0 auto;min-height:0;width:100%;display:flex;align-items:center;justify-content:center;}
+  #pz,#flip{width:min(100%,440px);max-width:440px;flex:0 0 auto;margin-inline:auto;}
   .poster{width:100%;max-width:440px;flex:none;}
   .back{padding:clamp(16px,5vw,22px);}
   .back h2{font-size:clamp(22px,6vw,28px);line-height:1.18;margin-bottom:5px;}
@@ -99,11 +101,12 @@ input[type=range]{width:100%;margin-top:12px;accent-color:var(--acc)}
   .btn{padding:14px 12px;font-size:16px;}
 }
 [hidden]{display:none!important}
+
 </style>
 </head>
 <body>
 <div class="app">
-  <div class="top"><button class="ib" id="back" hidden onclick="goBack()">←</button><h1 id="ttl" class="logo">FILMBOX</h1><button class="ib" id="lucky" onclick="luckyGo()" aria-label="I’m Feeling Lucky" title="I’m Feeling Lucky"><svg class="shuffle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m18 14 4 4-4 4"/><path d="m18 2 4 4-4 4"/><path d="M2 18h2.5a5 5 0 0 0 4-2l6.9-8.1a5 5 0 0 1 4-2H22"/><path d="M2 6h2.5a5 5 0 0 1 4 2l6.9 8.1a5 5 0 0 0 4 2H22"/></svg></button><button class="ib" id="gear" onclick="openSet()" aria-label="Settings"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button><div class="pill" id="cnt">0/15</div></div>
+  <div class="top"><button class="ib" id="back" hidden onclick="goBack()">←</button><h1 id="ttl" class="logo">FILMBOX</h1><button class="ib" id="lucky" onclick="luckyGo()" aria-label="I’m Feeling Lucky" title="I’m Feeling Lucky"><svg class="shuffle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m18 14 4 4-4 4"/><path d="m18 2 4 4-4 4"/><path d="M2 18h2.5a5 5 0 0 0 4-2l6.9-8.1a5 5 0 0 1 4-2H22"/><path d="M2 6h2.5a5 5 0 0 1 4 2l6.9 8.1a5 5 0 0 0 4 2H22"/></svg></button><button class="ib" id="gear" onclick="openSet()" aria-label="Settings"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button><button class="ib watchlist-nav" id="watchlistNav" onclick="renderWatchlist()">My Watchlist</button></div>
   <div class="gal" id="gal"></div>
   <div class="play" id="play" hidden>
     
@@ -444,9 +447,11 @@ const uri=F.map(f=>f.v.startsWith('data:image/')?'url("'+f.v+'")':'url(data:imag
 
 // Comedy posters updated from the latest 15-poster design sheet; each panel is cropped to remove the gutters.
 const DIFF=[["Easy 3×4",3,4],["Medium 4×6",4,6],["Hard 6×9",6,9]];
-let saved={},watched={},cur=-1,cat=-1,view='home',lv=0,cols=3,rows=4,order=[],sel=-1,moves=0,solved=false,tiles=[];
+let saved={},watched={},watchlist={},cur=-1,cat=-1,view='home',lv=0,cols=3,rows=4,order=[],sel=-1,moves=0,solved=false,tiles=[],returnToWatchlist=false;
 try{watched=JSON.parse(localStorage.getItem('fb_watched')||'{}')}catch(e){}
+try{watchlist=JSON.parse(localStorage.getItem('fb_watchlist')||'{}')}catch(e){}
 const saveWatched=()=>{try{localStorage.setItem('fb_watched',JSON.stringify(watched))}catch(e){}}
+const saveWatchlist=()=>{try{localStorage.setItem('fb_watchlist',JSON.stringify(watchlist))}catch(e){}}
 try{saved=JSON.parse(localStorage.getItem('fb1')||'{}')}catch(e){}
 const save=()=>{try{localStorage.setItem('fb1',JSON.stringify(saved))}catch(e){}};
 // Progress is keyed by stable film identity, not array position. Discard legacy numeric-index records to prevent cross-category unlock corruption.
@@ -459,25 +464,38 @@ const open_=i=>{const l=inCat(F[i].k),p=l.indexOf(i);return p===0||done(l[p-1])}
 const mos=i=>{const r=R(i*7+3),a=[...Array(12).keys()];for(let k=11;k>0;k--){const j=Math.floor(r()*(k+1));[a[k],a[j]]=[a[j],a[k]]}return a.map(p=>`<i style="background-image:${bg(i)};background-position:${(p%3)/2*100}% ${Math.floor(p/3)/3*100}%"></i>`).join('')};
 const th=(i,d,o)=>d?`<div class="th" style="background-image:${bg(i)}"></div>`:o?`<div class="th mos">${mos(i)}</div>`:`<div class="th lk">?</div>`;
 const bg=i=>uri[i].replace(/"/g,'&quot;');
-function setTop(t,logo,showBack,cnt){const h=$('ttl');h.textContent=t;h.className=logo?'logo':'';$('back').hidden=!showBack;$('cnt').textContent=cnt;const homeScreen=view==='home';$('lucky').hidden=!homeScreen;$('gear').hidden=!homeScreen}
+function setTop(t,logo,showBack,cnt){const h=$('ttl');h.textContent=t;h.className=logo?'logo':'';$('back').hidden=!showBack;const homeScreen=view==='home';$('lucky').hidden=!homeScreen;$('gear').hidden=!homeScreen}
 let lucky=false,wt=0,wcb=null;
 const shuffleHistory=[];
-function goBack(){if(lucky){home();return}view==='play'?catView(F[cur].k):home()}
+function goBack(){if(lucky){home();return}if(view==='play'&&returnToWatchlist){returnToWatchlist=false;renderWatchlist();return}view==='play'?catView(F[cur].k):home()}
 
 function home(){
-  lucky=false;view='home';$('play').hidden=true;$('gal').hidden=false;
+  lucky=false;returnToWatchlist=false;view='home';$('play').hidden=true;$('gal').hidden=false;
   setTop('FILMBOX',true,false,Object.keys(saved).length+'/'+F.length);
   $('gal').innerHTML='<p class="tag">Solve the poster. Unlock the movie.</p>'+CATS.map((c,k)=>{
     const l=inCat(k),n=l.filter(done).length,w=l.filter(i=>done(i)&&watched[filmKey(i)]).length;
-    return `<div class="cc" style="--c:${c[1]}" onclick="catView(${k})"><div class="r">${c[0]}<span>${n}/${l.length}</span></div><div class="pb"><i style="width:${n/l.length*100}%"></i></div>${n>0?`<p class="watch-progress">You've watched ${w} out of ${n} movies you've solved.</p>`:""}</div>`}).join('');
+    return `<div class="cc" style="--c:${c[1]}" onclick="catView(${k})"><div class="r">${c[0]}<span>${n}/${l.length}</span></div><div class="pb"><i style="width:${n/l.length*100}%"></i></div></div>`}).join('');
 }
 function catView(k){
-  lucky=false;view='cat';cat=k;$('play').hidden=true;$('gal').hidden=false;
+  lucky=false;returnToWatchlist=false;view='cat';cat=k;$('play').hidden=true;$('gal').hidden=false;
   const l=inCat(k);setTop(CATS[k][0],false,true,l.filter(done).length+'/'+l.length);
   $('gal').innerHTML=l.map(i=>{
     const d=done(i),o=open_(i);
-    return `<div class="row ${d?'':o?'p':'l'}" ${o?`onclick="openF(${i})"`:''}>${th(i,d,o)}<div><b>${d?F[i].t:o?'Next up':'Locked'}</b>${d?`<small>${F[i].y} · ${F[i].rt} min · ${F[i].d}</small>${watched[filmKey(i)]?'<small class="watched-mark">✓ Watched</small>':''}`:''}${!d?`<small>${o?'Tap to play':'Solve the previous film to unlock'}</small>`:''}</div></div>`}).join('');
+    return `<div class="row ${d?'':o?'p':'l'}" ${o?`onclick="openF(${i})"`:''}>${th(i,d,o)}<div><b>${d?F[i].t:o?'Next up':'Locked'}</b>${d?`<small>${F[i].y} · ${F[i].rt} min · ${F[i].d}</small>`:''}${!d?`<small>${o?'Tap to play':'Solve the previous film to unlock'}</small>`:''}</div></div>`}).join('');
 }
+function toggleWatchlist(i){
+  const key=filmKey(i);
+  if(watchlist[key])delete watchlist[key];else watchlist[key]=true;
+  saveWatchlist();
+  $('watchlistToggle').classList.toggle('is-added',!!watchlist[key]);$('watchlistToggle').innerHTML=watchlist[key]?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5 9.5 17 19 7.5"/></svg><span>Added to watchlist</span>':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/></svg><span>Add to my watchlist</span>';
+}
+function renderWatchlist(){
+  lucky=false;returnToWatchlist=false;view='watchlist';$('play').hidden=true;$('gal').hidden=false;
+  const items=F.map((f,i)=>({f,i})).filter(x=>watchlist[filmKey(x.i)]);
+  setTop('My Watchlist',false,true);
+  $('gal').innerHTML=items.length?items.map(({f,i})=>`<div class="row watchlist-item" onclick="openWatchlistFilm(${i})">${th(i,true,false)}<div><b>${f.t}</b><small>${f.y} · ${f.rt} min · ${f.d}</small></div></div>`).join(''):'<div class="watchlist-empty">Your watchlist is empty.<br>Add films from their movie cards.</div>';
+}
+function openWatchlistFilm(i){returnToWatchlist=true;openF(i)}
 function openF(i){
   cur=i;view='play';$('gal').hidden=true;$('play').hidden=false;
   done(i)?showCard():startPuzzle();
@@ -540,7 +558,7 @@ function showCard(){
   const f=F[cur],l=inCat(f.k),last=l.indexOf(cur)===l.length-1;
   $('pz').hidden=true;$('flip').hidden=false;$('flip').classList.remove('f');
   $('fr').style.backgroundImage=uri[cur];setTop(f.t,false,true,l.filter(done).length+'/'+l.length);$('info').textContent='';
-  $('bk').innerHTML=`<h2>${f.t}</h2><div class="m">${f.y}${f.rt?` · ${f.rt} min`:``} · Directed by ${f.d}</div><div class="rt"><a class="rating-link" href="https://www.imdb.com/find/?q=${encodeURIComponent(f.t+' '+f.y)}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"><b>IMDb</b>${f.vr?'':'~'}${f.im}/10</a><a class="rating-link" href="https://letterboxd.com/search/films/${encodeURIComponent(f.t)}/" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"><b>Letterboxd</b>~${f.lb}/5</a>${(f.tm??f.rt)!=null?`<a class="rating-link" href="https://www.rottentomatoes.com/search?search=${encodeURIComponent(f.t)}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"><b>RottenT</b>~${f.tm??f.rt}%</a>`:''}</div><h3>Cast</h3><p>${f.c}</p><h3>Story</h3><p>${f.s}</p>${f.aw?`<h3>Awards</h3><p>${f.aw}</p>`:''}<label class="watched" onclick="event.stopPropagation()"><input type="checkbox" ${watched[filmKey(cur)]?'checked':''} onchange="toggleWatched(${cur},this.checked)"><span>I’ve watched this film</span></label>`;
+  $('bk').innerHTML=`<h2>${f.t}</h2><div class="m">${f.y}${f.rt?` · ${f.rt} min`:``} · Directed by ${f.d}</div><div class="rt"><a class="rating-link" href="https://www.imdb.com/find/?q=${encodeURIComponent(f.t+' '+f.y)}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"><b>IMDb</b>${f.vr?'':'~'}${f.im}/10</a><a class="rating-link" href="https://letterboxd.com/search/films/${encodeURIComponent(f.t)}/" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"><b>Letterboxd</b>~${f.lb}/5</a>${(f.tm??f.rt)!=null?`<a class="rating-link" href="https://www.rottentomatoes.com/search?search=${encodeURIComponent(f.t)}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"><b>RottenT</b>~${f.tm??f.rt}%</a>`:''}</div><h3>Cast</h3><p>${f.c}</p><h3>Story</h3><p>${f.s}</p>${f.aw?`<h3>Awards</h3><p>${f.aw}</p>`:''}<button class="watchlist-toggle${watchlist[filmKey(cur)]?' is-added':''}" id="watchlistToggle" onclick="event.stopPropagation();toggleWatchlist(${cur})">${watchlist[filmKey(cur)]?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5 9.5 17 19 7.5"/></svg><span>Added to watchlist</span>':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/></svg><span>Add to my watchlist</span>'}</button>`;
   const lk=lucky;$('bNext').hidden=lk;$('bLC').hidden=!lk;$('bWatch').hidden=!lk;document.querySelector('.ctl').classList.toggle('col',lk);$('bLC').className='btn';$('bWatch').className='btn sec';
   $('bNext').textContent=last?'Back to home':'Next movie →';$('bNext').onclick=last?home:next;
   setTimeout(()=>$('flip').classList.add('f'),500);
@@ -569,7 +587,7 @@ function drawSet(){
   $('themeLight').classList.toggle('on',SET.theme==='light');$('themeDark').classList.toggle('on',SET.theme==='dark');
 }
 function setTheme(theme){SET.theme=theme;document.documentElement.setAttribute('data-theme',theme);saveSet();drawSet()}
-function toggleWatched(i,checked){if(checked)watched[filmKey(i)]=true;else delete watched[filmKey(i)];saveWatched();if(view==='home')home()}
+function toggleWatched(i,checked){if(checked)watched[filmKey(i)]=true;else delete watched[filmKey(i)];saveWatched()}
 function openSet(){drawSet();$('sov').classList.add('on')}
 function closeSet(){$('sov').classList.remove('on')}
 function setLv(k){lv=k;SET.lv=k;saveSet();drawSet();if(view==='play'&&$('flip').hidden)startPuzzle()}
